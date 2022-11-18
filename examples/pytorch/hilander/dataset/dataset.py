@@ -35,7 +35,7 @@ class LanderDataset(object):
 
         # Initialize features and labels
         # Khởi tạo Features (F) và Labels
-        features = l2norm(features.astype("float32")) #
+        features = l2norm(features.astype("float32")) #float32
         global_features = features.copy()
         if cluster_features is None:
             cluster_features = features
@@ -111,7 +111,7 @@ class LanderDataset(object):
         g.ndata["cluster_features"] = torch.FloatTensor(cluster_features) #thêm cluster_features vào đồ thị
         g.ndata["labels"] = torch.LongTensor(labels) #thêm labels vào đồ thị
         g.ndata["density"] = torch.FloatTensor(density) #thêm density vào đồ thị
-        g.ndata["norm"] = torch.FloatTensor(adj_row_sum) #thêm giá trị chuẩn hóa theo hàng vào đồ thị
+        g.ndata["norm"] = torch.FloatTensor(adj_row_sum) #thêm giá trị chuẩn hóa theo hàng vào đồ thị (1/a+b+c)
         #--------------------------------------------------------------
         g.edata["affine"] = torch.FloatTensor(values) #thêm giá trị a/(a+b+c) trên ma trận kề vào đồ thị
         # A Bipartite from  DGL sampler will not store global eid, so we explicitly save it here
@@ -120,7 +120,7 @@ class LanderDataset(object):
             lambda edges: {
                 "raw_affine": edges.data["affine"] / edges.dst["norm"]
             }
-        ) #cập nhật giá trị cạnh = giá trị cạnh / giá trị chuẩn hóa của đỉnh đích
+        ) #cập nhật giá trị cạnh = giá trị cạnh / giá trị chuẩn hóa của đỉnh đích ??? 
         g.apply_edges(
             lambda edges: {
                 "labels_conn": (

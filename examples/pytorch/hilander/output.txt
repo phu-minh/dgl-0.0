@@ -1,0 +1,24 @@
+09/11/2022 12:28:07
+Clustering with k=4,level=1
+pairwise ave_pre: 0.7619, ave_rec: 0.8000, fscore: 0.7805
+bcubed ave_pre: 0.8319, ave_rec: 0.8431, fscore: 0.8375
+nmi: 0.7828
+{'#gt clusters': 3, '#pred clusters': 3, 'h-score': 0.7750422050308443, 'c-score': 0.7907066447243335, 'v-meansure': 0.7827960679077117}
+09/11/2022 12:28:25
+Clustering with k=5,level=1
+pairwise ave_pre: 0.3810, ave_rec: 0.8000, fscore: 0.5161
+bcubed ave_pre: 0.5294, ave_rec: 0.8431, fscore: 0.6504
+nmi: 0.3912
+{'#gt clusters': 3, '#pred clusters': 2, 'h-score': 0.2930773469838432, 'c-score': 0.5882435967721745, 'v-meansure': 0.39123289635551767}
+09/11/2022 12:28:42
+Clustering with k=7,level=1
+pairwise ave_pre: 0.2941, ave_rec: 1.0000, fscore: 0.4545
+bcubed ave_pre: 0.3356, ave_rec: 1.0000, fscore: 0.5026
+nmi: 0.0000
+{'#gt clusters': 3, '#pred clusters': 1, 'h-score': 0.0, 'c-score': 1.0, 'v-meansure': 0.0}
+09/11/2022 12:29:00
+Clustering with k=9,level=1
+pairwise ave_pre: 0.2941, ave_rec: 1.0000, fscore: 0.4545
+bcubed ave_pre: 0.3356, ave_rec: 1.0000, fscore: 0.5026
+nmi: 0.0000
+{'#gt clusters': 3, '#pred clusters': 1, 'h-score': 0.0, 'c-score': 1.0, 'v-meansure': 0.0}

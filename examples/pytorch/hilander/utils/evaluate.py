@@ -57,7 +57,7 @@ def evaluate(gt_labels, pred_labels, metric="pairwise"):
 
 
 def evaluation(pred_labels, labels, metrics):
-    print("==> evaluation")
+    #print("==> evaluation")
     # pred_labels = g.ndata['pred_labels'].cpu().numpy()
     max_cluster = np.max(pred_labels)
     # gt_labels_all = g.ndata['labels'].cpu().numpy()

@@ -18,16 +18,14 @@ def row_normalize(mx):
     #if rowsum <= 0, keep its previous value
     rowsum[rowsum <= 0] = 1
     r_inv = np.power(rowsum, -1).flatten()
-   # print(r_inv)
+    #print(r_inv)
     r_inv[np.isinf(r_inv)] = 0.0
-    #print(r_inv)
-    #print(r_inv)
+   # print(r_inv)
     r_mat_inv = sp.diags(r_inv)
     #print(mx)
     #print(mx.toarray()[0])
-    #print('---------')
-   #print(r_mat_inv.toarray()[0])
-   # print(r_mat_inv)    
+    print('---------')
+    print(r_mat_inv)    
     #print('---------')
     mx = r_mat_inv.dot(mx)
     #print(mx.toarray()[0])#.sum())

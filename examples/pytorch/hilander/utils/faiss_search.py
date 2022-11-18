@@ -107,7 +107,7 @@ def faiss_search_knn(
     )
 
     if is_precise:
-        print("compute precise dist among k={} nearest neighbors".format(k))
+        #print("compute precise dist among k={} nearest neighbors".format(k))
         dists, nbrs = precise_dist(
             feat, nbrs, num_process=num_process, sort=sort, verbose=verbose
         )

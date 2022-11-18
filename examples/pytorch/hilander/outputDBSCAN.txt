@@ -1,0 +1,14 @@
+18/11/2022 03:11:20
+train: data/subcenter_arcface_deepglint_train_1_in_10_recreated.pkl
+test: /content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features_sampled_as_deepglint_1_in_10.pkl
+pairwise ave_pre: 0.0002, ave_rec: 0.8409, fscore: 0.0004
+bcubed ave_pre: 0.0783, ave_rec: 0.8600, fscore: 0.1436
+nmi: 0.1451
+{'#gt clusters': 18084, '#pred clusters': 37136, 'h-score': 0.08151009987053316, 'c-score': 0.6612100667747042, 'v-meansure': 0.1451294875205706}
+18/11/2022 06:36:42
+train: data/subcenter_arcface_deepglint_train_1_in_10_recreated.pkl
+test: /content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features_sampled_as_deepglint_1_in_10.pkl
+pairwise ave_pre: 0.0002, ave_rec: 0.8450, fscore: 0.0004
+bcubed ave_pre: 0.0772, ave_rec: 0.8625, fscore: 0.1417
+nmi: 0.1431
+{'#gt clusters': 18084, '#pred clusters': 36698, 'h-score': 0.0802261142403812, 'c-score': 0.6616552432720364, 'v-meansure': 0.14310112687688373}

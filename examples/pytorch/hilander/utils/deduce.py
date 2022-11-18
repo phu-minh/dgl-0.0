@@ -146,7 +146,9 @@ def tree_generation(ng):
 
 def peak_propogation(treeg):
     treeg.ndata["pred_labels"] = torch.zeros(treeg.number_of_nodes()).long() - 1
+    #node data 'pred_labels' = số node của treeG 
     peaks = torch.where(treeg.in_degrees() == 0)[0].cpu().numpy()
+    #peaks = node có in_degree = 0
     treeg.ndata["pred_labels"][peaks] = torch.arange(peaks.shape[0])
 
     def message_func(edges):
@@ -186,7 +188,7 @@ def decode(
     ng = dgl.remove_edges(g, eids) #xóa các cạnh không thỏa mãn điều kiện trên
     #new graph ng from g
     # Tree generation
-    ng.edata[dgl.EID] = torch.arange(ng.number_of_edges()) #thêm cột dgl.EID (edge ID) vào new graph
+    ng.edata[dgl.EID] = torch.arange(ng.number_of_edges()) #thêm cột dgl.EID (edge ID) vào new graph (tương ứng với đồ thị đã bỏ cạnh)
     treeg = tree_generation(ng) #tạo treeg từ ng , dùng topological traversal.
     #
     

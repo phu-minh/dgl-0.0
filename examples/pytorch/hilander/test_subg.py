@@ -45,7 +45,7 @@ parser.add_argument("--use_gt", action="store_true")
 parser.add_argument("--batch_size", type=int, default=4096)
 
 args = parser.parse_args()
-print(args)
+#print(args)
 
 ###########################
 # Environment Configuration
@@ -60,10 +60,10 @@ with open(args.data_path, "rb") as f:
     features, labels = pickle.load(f)
 global_features = features.copy()
 dataset = LanderDataset(
-    features=features,
+    features=features,  
     labels=labels,
     k=args.knn_k,
-    levels=1,
+    levels=args.levels,
     faiss_gpu=args.faiss_gpu,
 )
 g = dataset.gs[0]
@@ -130,8 +130,8 @@ for level in range(args.levels):
                 "prob_conn"
             ].to("cpu")
             torch.cuda.empty_cache()
-            if (batch + 1) % 10 == 0:
-                print("Batch %d / %d for inference" % (batch, total_batches))
+            # if (batch + 1) % 10 == 0:
+            #     print("Batch %d / %d for inference" % (batch, total_batches))
 
     (
         new_pred_labels,

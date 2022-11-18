@@ -128,24 +128,18 @@
 #             # nbrs = [[1,2,...k], [3,4,...k], ...]
 #             # sims = [[0.9,0.8,...k], [0.8,0.7,...k]
 import pickle
-import numpy as np
+import faulthandler
+faulthandler.enable()
 import faiss
-from utils import (
-    build_knns,
-    build_next_level,
-    decode,
-    density,
-    density_estimation,
-    fast_knns2spmat,
-    knns2ordered_nbrs,
-    l2norm,
-    row_normalize,
-    sparse_mx_to_indices_values,
-)
-from dataset import LanderDataset
+import numpy as np
 import torch
 
-data_path = '/Users/minhphu/Work/kltn/dgl/examples/pytorch/hilander/handcrawl_data/train_encodings.pickle'
+from dataset import LanderDataset
+from utils import (build_knns, build_next_level, decode, density,
+                   density_estimation, fast_knns2spmat, knns2ordered_nbrs,
+                   l2norm, row_normalize, sparse_mx_to_indices_values)
+
+data_path = 'handcrawl_data/train_encodings.pickle'
 with open(data_path, "rb") as f:
     features, labels = pickle.load(f)
 # print(features)
