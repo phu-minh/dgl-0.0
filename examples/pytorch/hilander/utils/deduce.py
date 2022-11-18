@@ -98,22 +98,49 @@ def get_edge_dist(g, threshold):
 
 
 def tree_generation(ng):
-    ng.ndata["keep_eid"] = torch.zeros(ng.number_of_nodes()).long() - 1
+    # import networkx as nx
+    # import matplotlib.pyplot as plt
+    # print('We have %d nodes.' % ng.number_of_nodes())
+    # print('We have %d edges.' % ng.number_of_edges()) 
+    # nx_G = ng.to_networkx().to_undirected()
+    # pos = nx.kamada_kawai_layout(nx_G)
+    # nx.draw(nx_G, pos, with_labels=True, node_color=[[.7, .7, .7]])
+    # #nx.draw(nx_G, with_labels=True)
+    # plt.savefig('1.png', dpi=300, bbox_inches='tight')
 
+
+    ng.ndata["keep_eid"] = torch.zeros(ng.number_of_nodes()).long() - 1
+    #print(torch.zeros(ng.number_of_nodes()).long())
     def message_func(edges):
+        #print(edges.data["edge_dist"])
+        #print(edges.data[dgl.EID])
         return {"mval": edges.data["edge_dist"], "meid": edges.data[dgl.EID]}
+        #mval = edges.data["edge_dist"] (message value)
+        #meid = edges.data[dgl.EID] (message edge id)
 
     def reduce_func(nodes):
-        ind = torch.min(nodes.mailbox["mval"], dim=1)[1]
-        keep_eid = nodes.mailbox["meid"].gather(1, ind.view(-1, 1))
+        ind = torch.min(nodes.mailbox["mval"], dim=1)[1] #index of minimum value
+        keep_eid = nodes.mailbox["meid"].gather(1, ind.view(-1, 1))#gather the mesage edge id of the minimum value
         return {"keep_eid": keep_eid[:, 0]}
+        #
 
-    node_order = dgl.traversal.topological_nodes_generator(ng)
-    ng.prop_nodes(node_order, message_func, reduce_func)
-    eids = ng.ndata["keep_eid"]
-    eids = eids[eids > -1]
-    edges = ng.find_edges(eids)
-    treeg = dgl.graph(edges, num_nodes=ng.number_of_nodes())
+    node_order = dgl.traversal.topological_nodes_generator(ng)# lấy topological order của đồ thị  
+    #print(node_order)
+    ng.prop_nodes(node_order, message_func, reduce_func) # propogate message từ node đầu tiên đến node cuối cùng
+
+
+    eids = ng.ndata["keep_eid"] # lấy edge id của các node cần keep
+    eids = eids[eids > -1] # lấy các edge id > -1
+    edges = ng.find_edges(eids) # lấy các cạnh của các edge id
+    treeg = dgl.graph(edges, num_nodes=ng.number_of_nodes()) # tạo đồ thị cây từ các cạnh
+
+    # print('We have %d nodes.' % treeg.number_of_nodes())
+    # print('We have %d edges.' % treeg.number_of_edges()) 
+    # nx_G = treeg.to_networkx().to_undirected()
+    # pos = nx.kamada_kawai_layout(nx_G)
+    # nx.draw(nx_G, pos, with_labels=True, node_color=[[.7, .7, .7]])
+    # #nx.draw(nx_G, with_labels=True)
+    # plt.savefig('2.png', dpi=300, bbox_inches='tight')
     return treeg
 
 
@@ -145,35 +172,38 @@ def decode(
     global_peaks=None,
 ):
     # Edge filtering with tau and density
-    den_key = "density" if use_gt else "pred_den"
-    g = g.local_var()
-    g.edata["edge_dist"] = get_edge_dist(g, threshold)
+    den_key = "density" if use_gt else "pred_den" #dùng density (nếu use_gt = True) để lọc cạnh
+    g = g.local_var() #copy graph
+    g.edata["edge_dist"] = get_edge_dist(g, threshold) #lấy edge_dist dựa trên 'prob' hoặc 'raw_affine'
     g.apply_edges(
         lambda edges: {
             "keep": (edges.src[den_key] > edges.dst[den_key]).long()
             * (edges.data["edge_dist"] < 1 - tau).long()
         }
-    )
-    eids = torch.where(g.edata["keep"] == 0)[0]
-    ng = dgl.remove_edges(g, eids)
-
+    )#"keep" = 1 nếu density của src > density của dst và edge_dist < 1- 0 (tau)
+    #dist = 1 tức cos_sims = 0 => không giống
+    eids = torch.where(g.edata["keep"] == 0)[0] #lấy eids của các cạnh không thỏa mãn điều kiện trên
+    ng = dgl.remove_edges(g, eids) #xóa các cạnh không thỏa mãn điều kiện trên
+    #new graph ng from g
     # Tree generation
-    ng.edata[dgl.EID] = torch.arange(ng.number_of_edges())
-    treeg = tree_generation(ng)
+    ng.edata[dgl.EID] = torch.arange(ng.number_of_edges()) #thêm cột dgl.EID (edge ID) vào new graph
+    treeg = tree_generation(ng) #tạo treeg từ ng , dùng topological traversal.
+    #
+    
     # Label propogation
-    peaks, pred_labels = peak_propogation(treeg)
+    peaks, pred_labels = peak_propogation(treeg) #tìm các peak và gán nhãn cho các peak
 
     if ids is None:
         return pred_labels, peaks
 
     # Merge with previous layers
-    src, dst = treeg.edges()
+    src, dst = treeg.edges() #lấy src và dst của các cạnh của treeg (new graph)
     new_global_edges = (
         global_edges[0] + ids[src.numpy()].tolist(),
         global_edges[1] + ids[dst.numpy()].tolist(),
-    )
-    global_treeg = dgl.graph(new_global_edges, num_nodes=global_num_nodes)
-    global_peaks, global_pred_labels = peak_propogation(global_treeg)
+    ) #tạo global_edges mới từ global_edges cũ và (src và dst) của treeg (new graph)
+    global_treeg = dgl.graph(new_global_edges, num_nodes=global_num_nodes) #tạo global_treeg từ global_edges mới
+    global_peaks, global_pred_labels = peak_propogation(global_treeg) #tìm global_peaks và gán nhãn cho global_peaks
     return (
         pred_labels,
         peaks,

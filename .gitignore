@@ -167,3 +167,13 @@ config.cmake
 
 # model file
 *.pth
+examples/pytorch/hilander/data/inat2018_test.pkl
+examples/pytorch/hilander/data/inat2018_train_dedup_inter_intra_1_in_6_per_class.pkl
+examples/pytorch/hilander/data/inat2018_train_dedup_inter_intra.pkl
+examples/pytorch/hilander/data/subcenter_arcface_deepglint_hannah.pkl
+examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features_sampled_as_deepglint_1_in_10.pkl
+examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features.pkl
+examples/pytorch/hilander/data/subcenter_arcface_deepglint_train_1_in_10_recreated.pkl
+examples/pytorch/hilander/handcrawl_data/test_3_classes_encodings.pickle
+examples/pytorch/hilander/handcrawl_data/test_4_classes_encodings.pickle
+examples/pytorch/hilander/handcrawl_data/train_encodings.pickle

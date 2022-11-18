@@ -19,13 +19,17 @@ __all__ = [
 
 def density_estimation(dists, nbrs, labels, **kwargs):
     """use supervised density defined on neigborhood"""
-    num, k_knn = dists.shape
-    conf = np.ones((num,), dtype=np.float32)
+    num, k_knn = dists.shape # (N,k)
+    conf = np.ones((num,), dtype=np.float32) # (N,)
     ind_array = labels[nbrs] == np.expand_dims(labels, 1).repeat(k_knn, 1)
-    pos = ((1 - dists[:, 1:]) * ind_array[:, 1:]).sum(1)
-    neg = ((1 - dists[:, 1:]) * (1 - ind_array[:, 1:])).sum(1)
-    conf = (pos - neg) * conf
-    conf /= k_knn - 1
+    #labels là mảng (N,) chứa nhãn của các điểm, expand_dims(labels, 1) là mảng (N,1) chứa nhãn của các điểm, 
+    #repeat(k_knn, 1) là mảng (N,k) chứa nhãn của các điểm
+    #ind_array là mảng (N,k) chứa 1/0 tương ứng 
+    pos = ((1 - dists[:, 1:]) * ind_array[:, 1:]).sum(1) # tổng các ( tích (1 - similiarity) với nhãn của các điểm )
+    neg = ((1 - dists[:, 1:]) * (1 - ind_array[:, 1:])).sum(1) #tổng các ( tích (1- similiarity) với (1 - nhãn của các điểm )    )                  
+    conf = (pos - neg) * conf # tính confidence
+    conf /= k_knn - 1 # normalize
+    print(len(conf))
     return conf
 
 

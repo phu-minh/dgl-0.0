@@ -24,14 +24,18 @@ __all__ = [
 
 
 def knns2ordered_nbrs(knns, sort=True):
+    '''
+    Knns to ordered neighbors
+    sắp xếp các neighbor theo thứ tự giảm  của độ tương tự (similarity)
+    '''
     if isinstance(knns, list):
         knns = np.array(knns)
     nbrs = knns[:, 0, :].astype(np.int32)
     dists = knns[:, 1, :]
     if sort:
         # sort dists from low to high
-        nb_idx = np.argsort(dists, axis=1)
-        idxs = np.arange(nb_idx.shape[0]).reshape(-1, 1)
+        nb_idx = np.argsort(dists, axis=1) #Returns the indices that would sort an array.
+        idxs = np.arange(nb_idx.shape[0]).reshape(-1, 1) #mảng index
         dists = dists[idxs, nb_idx]
         nbrs = nbrs[idxs, nb_idx]
     return dists, nbrs
@@ -43,6 +47,7 @@ def fast_knns2spmat(knns, k, th_sim=0, use_sim=True, fill_value=None):
 
     eps = 1e-5
     n = len(knns)
+    #print(n)
     if isinstance(knns, list):
         knns = np.array(knns)
     if len(knns.shape) == 2:
@@ -57,7 +62,9 @@ def fast_knns2spmat(knns, k, th_sim=0, use_sim=True, fill_value=None):
             ndarr[i, 1, :size] = dist[:size]
         knns = ndarr
     nbrs = knns[:, 0, :]
+    #print(nbrs)
     dists = knns[:, 1, :]
+    #print(dists)
     assert (
         -eps <= dists.min() <= dists.max() <= 1 + eps
     ), "min: {}, max: {}".format(dists.min(), dists.max())
@@ -70,11 +77,18 @@ def fast_knns2spmat(knns, k, th_sim=0, use_sim=True, fill_value=None):
         sims.fill(fill_value)
     row, col = np.where(sims >= th_sim)
     # remove the self-loop
-    idxs = np.where(row != nbrs[row, col])
-    row = row[idxs]
-    col = col[idxs]
+    #print(row)
+    #print(nbrs[row, col])
+    idxs = np.where(row != nbrs[row, col]) #lọc ra những cặp (i,j) mà i!=j (không phải là chính nó)
+    #print(idxs)
+    row = row[idxs] #gán lại row
+    #print(row)
+    col = col[idxs] #gán lại col
+    #print(col)
     data = sims[row, col]
+    #print(data)
     col = nbrs[row, col]  # convert to absolute column
+    #print(col)
     assert len(row) == len(col) == len(data)
     spmat = csr_matrix((data, (row, col)), shape=(n, n))
     return spmat
@@ -82,8 +96,10 @@ def fast_knns2spmat(knns, k, th_sim=0, use_sim=True, fill_value=None):
 
 def build_knns(feats, k, knn_method, dump=True):
     with Timer("build index"):
+        # build index for knn search
+        # and search for k-nearest neighbors
         if knn_method == "faiss":
-            index = knn_faiss(feats, k, omp_num_threads=None)
+            index = knn_faiss(feats, k, omp_num_threads=None) 
         elif knn_method == "faiss_gpu":
             index = knn_faiss_gpu(feats, k)
         else:
@@ -155,18 +171,27 @@ class knn_faiss(knn):
         with Timer("[faiss] build index", verbose):
             feats = feats.astype("float32")
             size, dim = feats.shape
-            index = faiss.IndexFlatIP(dim)
-            index.add(feats)
+            # build the index Inner Product (base on dimension), return byte * d vectors (d is dimension)
+            # normalize the vectors => inner product 
+            index = faiss.IndexFlatIP(dim) 
+            # add features to the index
+            index.add(feats)   
         with Timer("[faiss] query topk {}".format(k), verbose):
+            # search the top k nearest neighbors
             sims, nbrs = index.search(feats, k=k)
+            #print(sims)
+            #sims = simaliarity, nbrs = index of the nearest neighbors
+            #distance = 1 - simliarity
+            #
             self.knns = [
                 (
                     np.array(nbr, dtype=np.int32),
                     1 - np.array(sim, dtype=np.float32),
                 )
                 for nbr, sim in zip(nbrs, sims)
-            ]
-
+            ] 
+            # nbrs = [[1,2,...k], [3,4,...k], ...]
+            # sims = [[0.9,0.8,...k], [0.8,0.7,...k], ...]
 
 class knn_faiss_gpu(knn):
     def __init__(
@@ -198,3 +223,4 @@ class knn_faiss_gpu(knn):
                 )
                 for nbr, dist in zip(nbrs, dists)
             ]
+

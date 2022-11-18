@@ -57,22 +57,23 @@ else:
 with open(args.data_path, "rb") as f:
     features, labels = pickle.load(f)
 
-k_list = [int(k) for k in args.knn_k.split(",")]
-lvl_list = [int(l) for l in args.levels.split(",")]
-gs = []
-nbrs = []
-ks = []
-for k, l in zip(k_list, lvl_list):
+k_list = [int(k) for k in args.knn_k.split(",")] # giảm dần k_list
+lvl_list = [int(l) for l in args.levels.split(",")] # tăng dần lvl_list
+gs = [] #các graph g được tạo từ các level khác nhau
+nbrs = [] #các neighbor của các level khác nhau
+ks = [] #các k là số lượng neighbor của các level khác nhau
+for k, l in zip(k_list, lvl_list): #k=10, l=1
     dataset = LanderDataset(
         features=features,
         labels=labels,
         k=k,
         levels=l,
         faiss_gpu=args.faiss_gpu,
-    )
-    gs += [g for g in dataset.gs]
-    ks += [k for g in dataset.gs]
-    nbrs += [nbr for nbr in dataset.nbrs]
+    ) #tạo dataset từ các level khác nhau
+    gs += [g for g in dataset.gs] #các graph g được tạo từ các level khác nhau
+    ks += [k for g in dataset.gs]  #[k for g in dataset.gs] 
+    #các k là số lượng neighbor của các level khác nhau
+    nbrs += [nbr for nbr in dataset.nbrs] #các neibor của các level khác nhau
 
 print("Dataset Prepared.")
 
