@@ -16,8 +16,6 @@ def convertResultToCSV(path='output.txt'):
     result = list(split_list(result))
     #preprocessing the file
     for res in result:
-        print(res)
-        break
         baseDict = {} # create a dictionary
         date_time = res[0] # get the date_time
         baseDict['date_time'] = date_time # add the date_time to the dictionary
@@ -50,15 +48,11 @@ def convertResultToCSV(path='output.txt'):
                 elif name == 'bcubed':
                     bcubeDict[temp[i]] = float(re.sub("[,:]","",temp[i+1]))
                 elif name == 'nmi':
-                    baseDict['nmi'] = float(re.sub("[,:]}{","",temp[i]))
-            
-        
-
-                
+                    baseDict['nmi'] = float(re.sub("[,:]}{","",temp[i]))                
         baseDict['pairwise'] = pairwiseDict
         baseDict['bcubed'] = bcubeDict
         df_dict = pd.DataFrame.from_dict(baseDict, orient='index')
-        print(df_dict)
+        #print(df_dict)
         df = df.append(df_dict.T, ignore_index=True)
     df.to_csv('result.csv', index=False)
     return df
@@ -112,16 +106,13 @@ def convertResultToCSV_DBSCAN(path='outputDBSCAN.txt'):
                     bcubeDict[temp[i]] = float(re.sub("[,:]","",temp[i+1]))
                 elif name == 'nmi':
                     baseDict['nmi'] = float(re.sub("[,:]}{","",temp[i]))
-            
-        
-
-                
         baseDict['pairwise'] = pairwiseDict
         baseDict['bcubed'] = bcubeDict
         df_dict = pd.DataFrame.from_dict(baseDict, orient='index')
-        print(df_dict)
+        #print(df_dict)
         df = df.append(df_dict.T, ignore_index=True)
-    df.to_csv('result.csv', index=False)
+    df.to_csv('resultDBSCAN.csv', index=False)
     return df
 
+convertResultToCSV()
 convertResultToCSV_DBSCAN()

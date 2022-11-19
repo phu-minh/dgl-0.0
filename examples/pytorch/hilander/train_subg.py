@@ -2,7 +2,7 @@ import argparse
 import os
 import pickle
 import time
-
+import pandas as pd
 import numpy as np
 import torch
 import torch.optim as optim
@@ -134,6 +134,8 @@ scheduler = optim.lr_scheduler.CosineAnnealingLR(
 )
 
 print("Start Training.")
+###############
+df = pd.DataFrame['loss_den', 'loss_conn','loss_total']
 
 ###############
 # Training Loop
@@ -188,6 +190,10 @@ for epoch in range(args.epochs):
             np.array(loss_conn_val_total).mean(),
         )
     )
+    df['loss_den'] = loss_den_val_total
+    df['loss_conn'] = loss_conn_val_total
+    df['loss_total'] = loss_val_total
+    df.to_csv('loss.csv')
     torch.save(model.state_dict(), args.model_filename)
 
 torch.save(model.state_dict(), args.model_filename)
