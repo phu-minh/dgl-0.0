@@ -157,9 +157,9 @@ def peak_propogation(treeg):
     def reduce_func(nodes):
         return {"pred_labels": nodes.mailbox["mlb"][:, 0]}
 
-    node_order = dgl.traversal.topological_nodes_generator(treeg)
-    treeg.prop_nodes(node_order, message_func, reduce_func)
-    pred_labels = treeg.ndata["pred_labels"].cpu().numpy()
+    node_order = dgl.traversal.topological_nodes_generator(treeg) #lấy topological order của treeg
+    treeg.prop_nodes(node_order, message_func, reduce_func) #propogate message từ node đầu tiên đến node cuối cùng
+    pred_labels = treeg.ndata["pred_labels"].cpu().numpy() #lấy pred_labels của treeg
     return peaks, pred_labels
 
 
@@ -218,15 +218,15 @@ def decode(
 def build_next_level(
     features, labels, peaks, global_features, global_pred_labels, global_peaks
 ):
-    global_peak_to_label = global_pred_labels[global_peaks]
-    global_label_to_peak = np.zeros_like(global_peak_to_label)
+    global_peak_to_label = global_pred_labels[global_peaks] #gán nhãn cho global_peaks
+    global_label_to_peak = np.zeros_like(global_peak_to_label) #tạo global_label_to_peak = [0,0,...,0] (n)
     for i, pl in enumerate(global_peak_to_label):
         global_label_to_peak[pl] = i
     cluster_ind = np.split(
         np.argsort(global_pred_labels),
         np.unique(np.sort(global_pred_labels), return_index=True)[1][1:],
     )
-    cluster_features = np.zeros((len(peaks), global_features.shape[1]))
+    cluster_features = np.zeros((len(peaks), global_features.shape[1])) #tạo cluster_features 
     for pi in range(len(peaks)):
         cluster_features[global_label_to_peak[pi], :] = np.mean(
             global_features[cluster_ind[pi], :], axis=0

@@ -26,39 +26,40 @@ class LANDER(nn.Module):
         use_focal_loss=True,
         **kwargs
     ):
-        super(LANDER, self).__init__()
-        nhid_half = int(nhid / 2)
-        self.use_cluster_feat = use_cluster_feat
-        self.use_focal_loss = use_focal_loss
+        super(LANDER, self).__init__()  
+        nhid_half = int(nhid / 2) # nhid_half = 512 / 2 = 256
+        self.use_cluster_feat = use_cluster_feat # True
+        self.use_focal_loss = use_focal_loss # True
 
-        if self.use_cluster_feat:
+        if self.use_cluster_feat: # True
             self.feature_dim = feature_dim * 2
         else:
             self.feature_dim = feature_dim
 
-        input_dim = (feature_dim, nhid, nhid, nhid_half)
-        output_dim = (nhid, nhid, nhid_half, nhid_half)
+        input_dim = (feature_dim, nhid, nhid, nhid_half) # (512, 512, 512, 256)
+        output_dim = (nhid, nhid, nhid_half, nhid_half) # (512, 512, 256, 256)
         self.conv = nn.ModuleList()
-        self.conv.append(GraphConv(self.feature_dim, nhid, dropout, use_GAT, K))
+        self.conv.append(GraphConv(self.feature_dim, nhid, dropout, use_GAT, K)) # GraphConv(1024, 512, 0, True, 1)
         for i in range(1, num_conv):
             self.conv.append(
                 GraphConv(input_dim[i], output_dim[i], dropout, use_GAT, K)
             )
 
-        self.src_mlp = nn.Linear(output_dim[num_conv - 1], nhid_half)
-        self.dst_mlp = nn.Linear(output_dim[num_conv - 1], nhid_half)
+        self.src_mlp = nn.Linear(output_dim[num_conv - 1], nhid_half) # nn.Linear(256, 256)
+        self.dst_mlp = nn.Linear(output_dim[num_conv - 1], nhid_half) # nn.Linear(256, 256)
 
         self.classifier_conn = nn.Sequential(
-            nn.PReLU(nhid_half),
+            nn.PReLU(nhid_half),  
             nn.Linear(nhid_half, nhid_half),
             nn.PReLU(nhid_half),
             nn.Linear(nhid_half, 2),
-        )
+        ) #PreLu = max(0,x) + min(0,ax) where a is a learnable parameter
+        #PreLu(256), linear (256, 256), PreLu (256), linear (256, 2)
 
         if self.use_focal_loss:
-            self.loss_conn = FocalLoss(2)
+            self.loss_conn = FocalLoss(2) # FocalLoss(2)
         else:
-            self.loss_conn = nn.CrossEntropyLoss()
+            self.loss_conn = nn.CrossEntropyLoss() # CrossEntropyLoss()
         self.loss_den = nn.MSELoss()
 
         self.balance = balance

@@ -79,8 +79,8 @@ print("Dataset Prepared.")
 
 
 def set_train_sampler_loader(g, k):
-    fanouts = [k - 1 for i in range(args.num_conv + 1)]
-    sampler = dgl.dataloading.MultiLayerNeighborSampler(fanouts)
+    fanouts = [k - 1 for i in range(args.num_conv + 1)] #số đầu ra = k-1
+    sampler = dgl.dataloading.MultiLayerNeighborSampler(fanouts) #tạo MultiLayerNeighborSampler 
     # fix the number of edges
     train_dataloader = dgl.dataloading.DataLoader(
         g,
@@ -90,7 +90,7 @@ def set_train_sampler_loader(g, k):
         shuffle=True,
         drop_last=False,
         num_workers=args.num_workers,
-    )
+    ) #tạo dataloader
     return train_dataloader
 
 
@@ -112,7 +112,7 @@ model = LANDER(
     balance=args.balance,
     use_cluster_feat=args.use_cluster_feat,
     use_focal_loss=args.use_focal_loss,
-)
+) #tạo model
 model = model.to(device)
 model.train()
 
