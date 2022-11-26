@@ -177,3 +177,4 @@ examples/pytorch/hilander/data/subcenter_arcface_deepglint_train_1_in_10_recreat
 examples/pytorch/hilander/handcrawl_data/test_3_classes_encodings.pickle
 examples/pytorch/hilander/handcrawl_data/test_4_classes_encodings.pickle
 examples/pytorch/hilander/handcrawl_data/train_encodings.pickle
+examples/pytorch/hilander/data/100classes_random10to20.pkl

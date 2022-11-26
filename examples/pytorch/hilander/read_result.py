@@ -5,35 +5,40 @@ import pandas as pd
 
 def convertResultToCSV(path='output.txt'):
     #create DF and Result array
-    df = pd.DataFrame(columns=['date_time', 'k_knn','level','pairwise','bcubed','nmi','gt_cluster','pred_cluster','h_score','c-score','v_meansure'])
+    df = pd.DataFrame(columns=['date_time','test_path', 'k_knn','level','pairwise','bcubed','nmi','gt_cluster','pred_cluster','h_score','c-score','v_meansure'])
     result = []
     with open(path, 'r') as f:
         for line in f.readlines():
             result.append(line.strip())
     def split_list(a_list):
-        for i in range(0, len(a_list), 6):
-            yield result[i:i + 6]
+        for i in range(0, len(a_list), 7):
+            yield result[i:i + 7]
     result = list(split_list(result))
     #preprocessing the file
     for res in result:
         baseDict = {} # create a dictionary
         date_time = res[0] # get the date_time
         baseDict['date_time'] = date_time # add the date_time to the dictionary
-        k_level_info = (res[1].split(' '))[-1] # get the k_level_info
-        k = int(k_level_info[2]) # get the k
-        level = int(k_level_info[-1]) # get the level
+        test_path = res[1].split(' ')[-1][3:]
+        baseDict['test_path'] = test_path
+        k_level_info = (res[2].split(' '))[-1] # get the k_level_info
+        k_level_info = [int(s) for s in re.findall(r'\b\d+\b', k_level_info)]      
+        k = int(k_level_info[0]) # get the k
+        level = int(k_level_info[1]) # get the level
+        print(k, level)
         res.pop(0)
         res.pop(0)
+        res.pop(0) #remove date time, test path, k_level_info
         baseDict['k_knn'] = k #add the k to the dictionary
         baseDict['level'] = level #add the level to the dictionary
         pairwiseDict = {} 
         bcubeDict = {}
-        nmiDict = {} 
         for i in range(0, len(res)):
             if i == (len(res)-1):
                 temp = re.sub("[,:]","",res[i]).split(' ')
                 for j in range(0, len(temp)):
                     temp[j] = re.sub("[,:#'}{]","",temp[j])
+                #print(temp)
                 baseDict['pred_cluster'] = int(temp[2])
                 baseDict['gt_cluster'] = int(temp[5])
                 baseDict['h_score'] = float(temp[7])
@@ -115,4 +120,4 @@ def convertResultToCSV_DBSCAN(path='outputDBSCAN.txt'):
     return df
 
 convertResultToCSV()
-convertResultToCSV_DBSCAN()
+#convertResultToCSV_DBSCAN()

@@ -36,8 +36,8 @@ class GraphConvLayer(nn.Module):
 class GraphConv(nn.Module):
     def __init__(self, in_dim, out_dim, dropout=0, use_GAT=False, K=1):
         super(GraphConv, self).__init__()
-        self.in_dim = in_dim
-        self.out_dim = out_dim
+        self.in_dim = in_dim #input dimension
+        self.out_dim = out_dim #output dimension
 
         if use_GAT:
             self.gcn_layer = GATConv(
