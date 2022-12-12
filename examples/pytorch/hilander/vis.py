@@ -162,7 +162,8 @@ for k, l in zip(k_list, lvl_list): #k=10, l=1
     #print(ks)
     #các k là số lượng neighbor của các level khác nhau
     nbrs += [nbr for nbr in dataset.nbrs] #các neibor của các level khác nhau
-    #print(nbrs)
+    print(nbrs)
+
 print("Dataset Prepared.")
 
 # k = 5

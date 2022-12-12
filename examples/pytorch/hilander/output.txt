@@ -285,3 +285,122 @@ pairwise ave_pre: 0.6941, ave_rec: 0.7486, fscore: 0.7203
 bcubed ave_pre: 0.8635, ave_rec: 0.7565, fscore: 0.8065
 nmi: 0.9519
 {'#gt clusters': 50289, '#pred clusters': 125802, 'h-score': 0.9633871035715323, 'c-score': 0.9407210013945991, 'v-meansure': 0.9519191462278602}
+25/11/2022 13:34:52
+Test on:/content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features.pkl
+Clustering with k=10,level=15
+pairwise ave_pre: 0.6855, ave_rec: 0.7512, fscore: 0.7168
+bcubed ave_pre: 0.8636, ave_rec: 0.7572, fscore: 0.8069
+nmi: 0.9521
+{'#gt clusters': 50289, '#pred clusters': 125506, 'h-score': 0.9635827215927182, 'c-score': 0.9408868101832939, 'v-meansure': 0.9520995302262876}
+25/11/2022 13:51:41
+Test on:/content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features.pkl
+Clustering with k=9,level=15
+pairwise ave_pre: 0.7594, ave_rec: 0.7515, fscore: 0.7554
+bcubed ave_pre: 0.8721, ave_rec: 0.7588, fscore: 0.8115
+nmi: 0.9535
+{'#gt clusters': 50289, '#pred clusters': 125035, 'h-score': 0.9658691342437699, 'c-score': 0.9413767857671418, 'v-meansure': 0.9534656978696173}
+25/11/2022 14:08:09
+Test on:/content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features.pkl
+Clustering with k=8,level=15
+pairwise ave_pre: 0.7389, ave_rec: 0.7585, fscore: 0.7486
+bcubed ave_pre: 0.8786, ave_rec: 0.7619, fscore: 0.8161
+nmi: 0.9544
+{'#gt clusters': 50289, '#pred clusters': 123752, 'h-score': 0.9671057775512351, 'c-score': 0.942103248623067, 'v-meansure': 0.9544407996214609}
+25/11/2022 14:26:55
+Test on:/content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_imdb_features.pkl
+Clustering with k=7,level=15
+pairwise ave_pre: 0.7745, ave_rec: 0.7639, fscore: 0.7691
+bcubed ave_pre: 0.8837, ave_rec: 0.7648, fscore: 0.8200
+nmi: 0.9555
+{'#gt clusters': 50289, '#pred clusters': 121927, 'h-score': 0.968544064681519, 'c-score': 0.9428289284427032, 'v-meansure': 0.955513514042697}
+26/11/2022 11:27:40
+Test on:data/imdb_200classes_random30to50.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9104, ave_rec: 0.4010, fscore: 0.5567
+bcubed ave_pre: 0.9569, ave_rec: 0.4137, fscore: 0.5777
+nmi: 0.8375
+{'#gt clusters': 200, '#pred clusters': 3540, 'h-score': 0.9795785924911726, 'c-score': 0.7314900868331611, 'v-meansure': 0.8375491157540509}
+26/11/2022 11:30:16
+Test on:data/imdb_200classes_random30to50.pkl
+Clustering with k=15,level=10
+pairwise ave_pre: 0.8709, ave_rec: 0.4192, fscore: 0.5660
+bcubed ave_pre: 0.9400, ave_rec: 0.4297, fscore: 0.5898
+nmi: 0.8346
+{'#gt clusters': 200, '#pred clusters': 3524, 'h-score': 0.9711844915281906, 'c-score': 0.7316670295283239, 'v-meansure': 0.8345808935819999}
+26/11/2022 11:31:08
+Test on:data/imdb_200classes_random30to50.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.8971, ave_rec: 0.3969, fscore: 0.5503
+bcubed ave_pre: 0.9512, ave_rec: 0.4114, fscore: 0.5744
+nmi: 0.8360
+{'#gt clusters': 200, '#pred clusters': 3573, 'h-score': 0.9786434894566395, 'c-score': 0.7296291984436997, 'v-meansure': 0.8359869824436961}
+26/11/2022 11:34:46
+Test on:data/imdb_100classes_random30to50.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9276, ave_rec: 0.3899, fscore: 0.5491
+bcubed ave_pre: 0.9599, ave_rec: 0.4032, fscore: 0.5679
+nmi: 0.8154
+{'#gt clusters': 100, '#pred clusters': 1881, 'h-score': 0.9809851594166946, 'c-score': 0.6976602533280213, 'v-meansure': 0.8154126531232614}
+26/11/2022 11:46:08
+Test on:data/imdb_100classes_random30to50.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9897, ave_rec: 0.7890, fscore: 0.8780
+bcubed ave_pre: 0.9847, ave_rec: 0.7938, fscore: 0.8790
+nmi: 0.9437
+{'#gt clusters': 100, '#pred clusters': 482, 'h-score': 0.992586604693523, 'c-score': 0.8994754993517752, 'v-meansure': 0.9437399861217398}
+26/11/2022 11:48:05
+Test on:data/imdb_100classes_random30to50.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9912, ave_rec: 0.7974, fscore: 0.8838
+bcubed ave_pre: 0.9849, ave_rec: 0.8020, fscore: 0.8841
+nmi: 0.9454
+{'#gt clusters': 100, '#pred clusters': 477, 'h-score': 0.9931579698226393, 'c-score': 0.9019626469984046, 'v-meansure': 0.9453660979652345}
+30/11/2022 17:23:17
+Test on:data/imdb_100classes_random30to50.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9100, ave_rec: 0.3025, fscore: 0.4541
+bcubed ave_pre: 0.9727, ave_rec: 0.3226, fscore: 0.4845
+nmi: 0.7890
+{'#gt clusters': 100, '#pred clusters': 2415, 'h-score': 0.9860819023215822, 'c-score': 0.6575452904985579, 'v-meansure': 0.7889788070552665}
+01/12/2022 10:06:11
+Test on:data/imdb_100classes_random30to50.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9847, ave_rec: 0.8277, fscore: 0.8994
+bcubed ave_pre: 0.9773, ave_rec: 0.8311, fscore: 0.8983
+nmi: 0.9511
+{'#gt clusters': 100, '#pred clusters': 394, 'h-score': 0.9895541499455507, 'c-score': 0.9155084748452589, 'v-meansure': 0.9510923145562497}
+01/12/2022 10:20:41
+Test on:data/subcenter_arcface_deepglint_hannah.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9108, ave_rec: 0.6855, fscore: 0.7822
+bcubed ave_pre: 0.8660, ave_rec: 0.6431, fscore: 0.7381
+nmi: 0.8207
+{'#gt clusters': 251, '#pred clusters': 1071, 'h-score': 0.8812730118360821, 'c-score': 0.7678976088109033, 'v-meansure': 0.8206882053635222}
+01/12/2022 10:25:13
+Test on:data/subcenter_arcface_deepglint_hannah.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9552, ave_rec: 0.6098, fscore: 0.7444
+bcubed ave_pre: 0.8887, ave_rec: 0.5841, fscore: 0.7049
+nmi: 0.8091
+{'#gt clusters': 251, '#pred clusters': 1619, 'h-score': 0.9128182403452589, 'c-score': 0.7264706317017947, 'v-meansure': 0.8090528216231393}
+01/12/2022 10:29:03
+Test on:data/subcenter_arcface_deepglint_hannah.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.9184, ave_rec: 0.6942, fscore: 0.7907
+bcubed ave_pre: 0.8616, ave_rec: 0.6490, fscore: 0.7403
+nmi: 0.8185
+{'#gt clusters': 251, '#pred clusters': 1055, 'h-score': 0.877087090459043, 'c-score': 0.7672728730581623, 'v-meansure': 0.8185131561818069}
+01/12/2022 10:49:41
+Test on:data/subcenter_arcface_deepglint_imdb_features.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.5899, ave_rec: 0.7442, fscore: 0.6582
+bcubed ave_pre: 0.8634, ave_rec: 0.7561, fscore: 0.8062
+nmi: 0.9517
+{'#gt clusters': 50289, '#pred clusters': 125695, 'h-score': 0.9628768223978516, 'c-score': 0.9407308355865471, 'v-meansure': 0.9516750091879217}
+01/12/2022 11:04:13
+Test on:data/subcenter_arcface_deepglint_imdb_features.pkl
+Clustering with k=10,level=10
+pairwise ave_pre: 0.4923, ave_rec: 0.7793, fscore: 0.6034
+bcubed ave_pre: 0.8443, ave_rec: 0.7818, fscore: 0.8118
+nmi: 0.9508
+{'#gt clusters': 50289, '#pred clusters': 103499, 'h-score': 0.9554167080278414, 'c-score': 0.9463196233214473, 'v-meansure': 0.9508464074138405}

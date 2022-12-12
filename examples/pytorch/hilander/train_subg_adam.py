@@ -7,7 +7,6 @@ import torch.optim as optim
 import pandas as pd
 from models import LANDER
 from dataset import LanderDataset
-from torchinfo import summary
 
 
 ###########
@@ -102,7 +101,9 @@ model.train()
 
 #################
 # Hyperparameters
-opt = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum,
+# opt = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum,
+#                 weight_decay=args.weight_decay)
+opt = optim.Adam(model.parameters(), lr=args.lr,
                 weight_decay=args.weight_decay)
 
 # keep num_batch_per_loader the same for every sub_dataloader
@@ -134,18 +135,9 @@ for epoch in range(args.epochs):
               print(input_nodes.shape, bipartites)
             sub_g = sub_g.to(device)
             bipartites = [b.to(device) for b in bipartites]
-            # if my == 0:
-            #   print('Shape of node feature: ', bipartites[0].srcdata['features'].shape)
             # get the feature for the input_nodes
             opt.zero_grad()
             output_bipartite = model(bipartites)
-            if my == 0:
-              # print("Model's state_dict:")
-              # for param_tensor in model.state_dict():
-              #     print(param_tensor, "\t", model.state_dict()[param_tensor].size())
-              print(model)
-            # if my == 0:
-            #   print('Shape of output bipartite feature: ', output_bipartite.ndata['conv_features']['_N'].shape)
             if my == 0:
               print(output_bipartite)
             loss, loss_den_val, loss_conn_val = model.compute_loss(output_bipartite)
@@ -159,7 +151,7 @@ for epoch in range(args.epochs):
                       (epoch, batch, num_batch_per_loader, loader_id, num_loaders,
                        loss.item(), loss_den_val, loss_conn_val))
             scheduler.step()
-    my = my + 1
+        my = my + 1
     print('epoch: %d, loss: %.6f, loss_den: %.6f, loss_conn: %.6f'%
           (epoch, np.array(loss_val_total).mean(),
            np.array(loss_den_val_total).mean(), np.array(loss_conn_val_total).mean()))

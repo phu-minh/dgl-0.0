@@ -178,3 +178,7 @@ examples/pytorch/hilander/handcrawl_data/test_3_classes_encodings.pickle
 examples/pytorch/hilander/handcrawl_data/test_4_classes_encodings.pickle
 examples/pytorch/hilander/handcrawl_data/train_encodings.pickle
 examples/pytorch/hilander/data/100classes_random10to20.pkl
+examples/pytorch/hilander/npy/train_features.npy
+examples/pytorch/hilander/npy/train_knn.npy
+examples/pytorch/hilander/npy/train_labels.npy
+examples/pytorch/hilander/data/Archive.zip

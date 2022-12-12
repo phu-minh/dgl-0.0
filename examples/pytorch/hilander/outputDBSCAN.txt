@@ -12,3 +12,17 @@ pairwise ave_pre: 0.0002, ave_rec: 0.8450, fscore: 0.0004
 bcubed ave_pre: 0.0772, ave_rec: 0.8625, fscore: 0.1417
 nmi: 0.1431
 {'#gt clusters': 18084, '#pred clusters': 36698, 'h-score': 0.0802261142403812, 'c-score': 0.6616552432720364, 'v-meansure': 0.14310112687688373}
+26/11/2022 12:21:17
+train: /content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_train_1_in_10_recreated.pkl
+test: /content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/imdb_100classes_random30to50.pkl
+pairwise ave_pre: 0.0105, ave_rec: 0.7754, fscore: 0.0207
+bcubed ave_pre: 0.1370, ave_rec: 0.7810, fscore: 0.2331
+nmi: 0.2271
+{'#gt clusters': 100, '#pred clusters': 351, 'h-score': 0.14263647726731427, 'c-score': 0.5568937547495014, 'v-meansure': 0.22710487625566148}
+26/11/2022 12:42:45
+train: /content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/subcenter_arcface_deepglint_train_1_in_10_recreated.pkl
+test: /content/drive/MyDrive/KLTN_DATA/dgl/examples/pytorch/hilander/data/imdb_200classes_random30to50.pkl
+pairwise ave_pre: 0.0057, ave_rec: 0.7828, fscore: 0.0113
+bcubed ave_pre: 0.1626, ave_rec: 0.7903, fscore: 0.2698
+nmi: 0.2803
+{'#gt clusters': 200, '#pred clusters': 636, 'h-score': 0.17821343892805233, 'c-score': 0.6564504638877804, 'v-meansure': 0.28032431799358615}
