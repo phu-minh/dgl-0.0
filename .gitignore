@@ -166,7 +166,7 @@ config.cmake
 **.png
 
 # model file
-*.pth
+
 examples/pytorch/hilander/data/inat2018_test.pkl
 examples/pytorch/hilander/data/inat2018_train_dedup_inter_intra_1_in_6_per_class.pkl
 examples/pytorch/hilander/data/inat2018_train_dedup_inter_intra.pkl
