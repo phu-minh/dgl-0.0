@@ -19,7 +19,7 @@ for l in a.most_common(100):
     temp_label = []
     temp_feature = []
     ran = random.randint(30,50)
-    #print(ran)
+    #print(ran) 
     for i in range(len(labels)):
         if l[0] == labels[i] and len(temp_label) < ran:
             #print('found')

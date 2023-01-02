@@ -138,8 +138,9 @@ from dataset import LanderDataset
 from utils import (build_knns, build_next_level, decode, density,
                    density_estimation, fast_knns2spmat, knns2ordered_nbrs,
                    l2norm, row_normalize, sparse_mx_to_indices_values)
-
-data_path = 'handcrawl_data/train_encodings.pickle'
+#python test_subg_demo.py --data_path /Users/minhphu/Work/kltn/handcrawl/demo.pkl --model_filename checkpoint/deepglint_sampler_adam.pth --knn_k 10 --tau 0.8 --level 2 --threshold prob --hidden 512 --num_conv 1 --batch_size 16 --use_cluster_feat
+data_path = 'handcrawl_data/demo2.pkl'
+#data_path  = '/Users/minhphu/Work/kltn/handcrawl/demo.pkl'
 with open(data_path, "rb") as f:
     features, labels = pickle.load(f)
 # print(features)

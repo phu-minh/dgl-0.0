@@ -146,7 +146,7 @@ from datetime import datetime
 
 now = datetime.now()
 dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-print(dt_string,file=open('output.txt', 'a'))
-print('Test on:' + args.data_path,file=open('output.txt', 'a'))
-print('Clustering with k={},level={}'.format(args.knn_k,args.levels),file=open('output.txt', 'a'))
-evaluation(global_pred_labels, global_labels, args.metrics,'output.txt')
+print(dt_string,file=open('output_adam.txt', 'a'))
+print('Test on:' + args.data_path,file=open('output_adam.txt', 'a'))
+print('Clustering with k={},level={}'.format(args.knn_k,args.levels),file=open('output_adam.txt', 'a'))
+evaluation(global_pred_labels, global_labels, args.metrics,'output_adam.txt')

@@ -182,3 +182,5 @@ examples/pytorch/hilander/npy/train_features.npy
 examples/pytorch/hilander/npy/train_knn.npy
 examples/pytorch/hilander/npy/train_labels.npy
 examples/pytorch/hilander/data/Archive.zip
+examples/pytorch/hilander/output2/demo.csv
+examples/pytorch/hilander/output2/
