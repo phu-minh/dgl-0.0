@@ -3,7 +3,7 @@ from turtle import width
 import streamlit as st
 import pandas as pd
 import numpy as np
-from deepface import DeepFace
+#from deepface import DeepFace
 import cv2
 import numpy as np
 #import pandas as pd
@@ -39,7 +39,7 @@ def read_image_files(path):
         for f in files:
             #append the file name to the list
             full_path = os.path.join(root,f)
-            if full_path.endswith('.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.JPEG'):
+            if full_path.endswith(('.jpg', '.png', '.jpeg', '.JPG', '.PNG', '.JPEG')):
                 imgList.append(full_path)
     imgList = natsorted(imgList)
     for path in imgList:
@@ -88,7 +88,7 @@ def saveEncoding(data, path = '/Users/minhphu/Work/kltn/handcrawl',name = 'demo2
 
 def createDataset(rerun = False):
     data_df = read_image_files('/Users/minhphu/Work/kltn/handcrawl2')
-    model = createModel('SFace')
+    #model = createModel('SFace')
     if os.path.exists('/Users/minhphu/Work/kltn/handcrawl/demo2.pkl'):
         st.write('Already have data! Located at /Users/minhphu/Work/kltn/handcrawl/demo2.pkl')
     if rerun:
@@ -112,10 +112,11 @@ if st.button('Clustering'):
     path = '/Users/minhphu/Work/kltn/handcrawl2' #path to folder contain images
     data_df = createDataset() #return dataframe contain path to images and labels, rerun = True to create dataset again
     #run clustering, store result in handcrawl2 folder
-    if os.system('python test_subg_demo_handcrawl.py --data_path /Users/minhphu/Work/kltn/handcrawl/demo2.pkl --model_filename checkpoint/deepglint_random_sface_adam_2.pth --knn_k 10 --tau 0.4 --level 2 --threshold prob --hidden 512 --num_conv 1 --batch_size 16 --use_cluster_feat --early_stop'):
+    if os.system('python test_subg_demo_handcrawl.py --data_path /Users/minhphu/Work/kltn/handcrawl/demo2.pkl --model_filename handcrawl_data/deepglint_random_sface_adam_2.pth --knn_k 10 --tau 0.5 --level 2 --threshold prob --hidden 512 --num_conv 1 --batch_size 16 --use_cluster_feat --early_stop'):
         st.success('This is a success message!', icon="✅")
     res_df = pd.read_csv('/Users/minhphu/Work/kltn/handcrawl2/demo_res.csv')
     st.dataframe(res_df)
+    st.dataframe(data_df)
     # from read_result import convertResultToCSV_demo_handcrawl
     # st.write('Done')
     # all_df = pd.DataFrame()
@@ -180,6 +181,9 @@ else:
     if selected_model == 'All':
         filtered_values = df[(df['k']==selected_knn) & (df['l']== selected_level) & (df['tau'] == selected_tau)]
         filtered_df = pd.DataFrame(filtered_values)
+    elif selected_model != 'All':
+        filtered_values = df[(df['model_name'] == selected_model)]
+        filtered_df = pd.DataFrame(filtered_values)
     elif selected_knn == 'All':
         filtered_values = df[(df['model_name'] == selected_model) & (df['l']== selected_level) & (df['tau'] == selected_tau)]
         filtered_df = pd.DataFrame(filtered_values)
@@ -195,7 +199,8 @@ else:
     if filtered_df.empty:
         st.warning('No result')
     else :
-        st.dataframe(filtered_df)
+        with st.expander('Click to show filtered result'):
+            st.dataframe(filtered_df)
         selected_metric = st.selectbox('Choose other metric',['nmi','pairwise','bcubed'],index=2)
         if st.button('Show '+str(selected_metric) +' highest metrics'):
             #with selected_metric:
