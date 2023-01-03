@@ -7,7 +7,7 @@ import torch.optim as optim
 from datetime import datetime
 from models import LANDER
 from dataset import LanderDataset
-from utils import evaluation, decode, build_next_level, stop_iterating
+from utils import evaluation, decode, build_next_level, stop_iterating, evaluation,evaluate
 
 ###########
 # ArgParser
@@ -78,6 +78,7 @@ global_edges = ([], [])
 global_peaks = np.array([], dtype=np.compat.long)
 global_edges_len = len(global_edges[0])
 global_num_nodes = g.number_of_nodes()
+global_pred_labels = np.zeros((global_num_nodes))
 
 fanouts = [args.knn_k-1 for i in range(args.num_conv + 1)]
 sampler = dgl.dataloading.MultiLayerNeighborSampler(fanouts)

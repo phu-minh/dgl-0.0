@@ -1,4 +1,3 @@
-evaluate.py
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
@@ -6,7 +5,8 @@ import inspect
 import argparse
 import numpy as np
 import pandas as pd
-from utils import Timer, TextColors, metrics
+from .misc import TextColors, Timer
+from . import metrics
 from clustering_benchmark import ClusteringBenchmark
 
 def _read_meta(fn):
