@@ -224,7 +224,7 @@ def convertResultToCSV_demo(path):
     return df
 
 
-def convertResultToCSV_demo_handcrawl(path = ''):
+def convertResultToCSV_demo_handcrawl(path = None):
     #create DF and Result array
     #model, k, l, tau, pairwise_fscore,  bcubed_fscore, nmi, gt_cluster, pred_cluster, 
     #pairwise_precision, pairwise_recall, bcubed_precision, bcubed_recall, time, h_score, c_score, v_measure 
@@ -270,8 +270,8 @@ def convertResultToCSV_demo_handcrawl(path = ''):
                 for j in range(0, len(temp)):
                     temp[j] = re.sub("[,:#'}{]","",temp[j])
                 #print(temp)
-                baseDict['pred_cluster'] = int(temp[2])
-                baseDict['gt_cluster'] = int(temp[5])
+                baseDict['gt_cluster'] = int(temp[2])
+                baseDict['pred_cluster'] = int(temp[5])
                 baseDict['h_score'] = float(temp[7])
                 baseDict['c_score'] = float(temp[9])
                 baseDict['v_measure'] = float(temp[11])
@@ -330,6 +330,6 @@ for path in all_path:
     #print(df.iloc[0])
     all_df = pd.concat([all_df, df], axis=0)
 
-print(all_df)
+#print(all_df)
 all_df.to_csv('output2/demo.csv', index=False)
 #model, k, l, tau, pairwise_fscore,  bcubed_fscore, nmi, gt_cluster, pred_cluster, pairwise_precision, pairwise_recall, bcubed_precision, bcubed_recall, time, h_score, c_score, v_measure 
